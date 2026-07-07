@@ -20,8 +20,9 @@ jobs:
           python -m pip install --upgrade pip
           pip install --user buildozer cython virtualenv
 
-      - name: Initialize Buildozer
-        run: ~/.local/bin/buildozer init
+      - name: Create Buildozer Spec File
+        run: |
+          ~/.local/bin/buildozer init
 
       - name: Configure buildozer.spec
         run: |
