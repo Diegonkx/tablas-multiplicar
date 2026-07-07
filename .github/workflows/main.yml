@@ -3,7 +3,7 @@ on: [push, workflow_dispatch]
 
 jobs:
   build:
-    runs-on: ubuntu-latest
+    runs-on: ubuntu-22.04
     steps:
       - name: Checkout code
         uses: actions/checkout@v3
@@ -17,7 +17,8 @@ jobs:
         run: |
           sudo apt update
           sudo apt install -y git zip unzip openjdk-17-jdk autoconf libtool pkg-config zlib1g-dev libncurses5-dev libgdbm-dev libnss3-dev libssl-dev libreadline-dev libffi-dev libsqlite3-dev tk-dev libgdbm-compat-dev liblzma-dev lzma
-          pip install --user --upgrade buildozer cython virtualenv
+          python -m pip install --upgrade pip
+          pip install --user buildozer cython virtualenv
 
       - name: Initialize Buildozer
         run: ~/.local/bin/buildozer init
@@ -28,7 +29,7 @@ jobs:
           sed -i 's/^package.name =.*/package.name = tablasanimadas/' buildozer.spec
           sed -i 's/^package.domain =.*/package.domain = org.tarea/' buildozer.spec
           sed -i 's/^source.include_exts =.*/source.include_exts = py,png,jpg,ttf/' buildozer.spec
-          sed -i 's/^requirements =.*/requirements = python3,pygame,kivy/' buildozer.spec
+          sed -i 's/^requirements =.*/requirements = python3,pygame==2.5.2,kivy==2.3.0/' buildozer.spec
           sed -i 's/^#android.archs =.*/android.archs = arm64-v8a/' buildozer.spec
 
       - name: Build with Buildozer
